@@ -2,12 +2,14 @@
 #define _CONFIG_HEADER_
 
 
-
 /**
  * @brief Set to the exact amount of panels in the display. Never set it lower!!!
- * 
  */
-#define CFG_PANEL_COUNT 7
+#define CFG_PANEL_COUNT 1
+/**
+ * @brief Set the byte polarity of the driver - 0 is normal, 1 is inverted
+ */
+#define CFG_PIXEL_POLARITY 0
 
 //PIN DEFINITIONS
 

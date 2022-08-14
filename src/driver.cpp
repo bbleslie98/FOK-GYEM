@@ -65,9 +65,9 @@ void driver_setBuffer(const uint8_t * data, uint8_t size) {
 	for(uint8_t i = 0; i < DRV_COL_COUNT/8*CFG_PANEL_COUNT; i++) {
 		for(uint8_t j = 0; j < DRV_ROW_COUNT; j++) {
 			if(j%2 == 0) {
-				_buffer[AT(i,j)] = data[AT(i,j)] ^ 0x55;
+				_buffer[AT(i,j)] = data[AT(i,j)] ^ (CFG_PIXEL_POLARITY ? 0x55 : 0xAA);
 			} else {
-				_buffer[AT(i,j)] = data[AT(i,j)] ^ 0xAA;
+				_buffer[AT(i,j)] = data[AT(i,j)] ^ (CFG_PIXEL_POLARITY ? 0xAA : 0x55);
 			}
 		}
 	}
