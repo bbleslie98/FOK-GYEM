@@ -12,7 +12,6 @@ enum _DRV_ROW_CONTROL_MODE {
 
 /**
  * @brief Stores the display data, in a checkboard compensated form.
- * 
  */
 static uint8_t _buffer[DRV_DATABUFF_SIZE];
 static uint8_t _buffer_prev[DRV_DATABUFF_SIZE];
@@ -176,7 +175,7 @@ void driver_writeScreen() {
 			for(uint8_t col = DRV_COL_COUNT; col > 0 ; col--) { //Current pin is set
 				uint16_t colIndx = col-1+DRV_COL_COUNT*panel;
 
-				if(_BIT_AT_B(colIndx, row) == 1){ //Bit is set
+				if(_BIT_AT_B(colIndx, row)){ //Bit is set
 					if((CFG_RELATIVE_MODE &&  (_BIT_AT_BPRV(colIndx, row) == 0)) || !CFG_RELATIVE_MODE) {
 
 						shiftReg_latchData(&_colCntrlReg);
@@ -197,7 +196,7 @@ void driver_writeScreen() {
 				uint16_t colIndx = col-1+DRV_COL_COUNT*panel;
 
 				if(_BIT_AT_B(colIndx, row) == 0){ //Current pin is not set
-					if((CFG_RELATIVE_MODE && (_BIT_AT_BPRV(colIndx, row) == 1)) || !CFG_RELATIVE_MODE) { 
+					if((CFG_RELATIVE_MODE && _BIT_AT_BPRV(colIndx, row)) || !CFG_RELATIVE_MODE) { 
 						shiftReg_latchData(&_colCntrlReg);
 						shiftReg_outputSet(&_rowCntrlReg, true);
 						digitalWrite(CFG_COL_CONTROL_OUTPUT_GND, CFG_COL_CONTROL_OUTPUT_GND_ON);
@@ -210,4 +209,14 @@ void driver_writeScreen() {
 			}
 		}
 	}
+	memcpy(_buffer_prev, _buffer, DRV_DATABUFF_SIZE);
+}
+
+void driver_forceWriteScreen() {
+	if(CFG_RELATIVE_MODE) {
+		for (size_t i = 0; i < DRV_DATABUFF_SIZE; i++) {
+			_buffer_prev[i] = ~_buffer[i];
+		}
+	}
+	driver_writeScreen();
 }
