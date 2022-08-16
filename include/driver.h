@@ -5,6 +5,8 @@
 #include "shiftRegister.h"
 #include "Arduino.h"
 
+#define _NOP __asm__ __volatile__ ("nop\n\t")
+
 #define DRV_COL_COUNT 24
 #define DRV_ROW_COUNT 7
 #define DRV_ROW_SHIFT_BASE 0x02

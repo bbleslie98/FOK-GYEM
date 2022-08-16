@@ -21,6 +21,8 @@ struct shiftReg_t {
 
 
 inline void shiftReg_shiftIn(shiftReg_t* shiftReg) {
+	digitalPinToPort(shiftReg->PIN_CLK);
+
 	digitalWrite(shiftReg->PIN_CLK, HIGH);
 	digitalWrite(shiftReg->PIN_CLK, LOW);
 }

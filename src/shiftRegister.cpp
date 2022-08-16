@@ -1,4 +1,5 @@
 #include "shiftRegister.h"
+#include "pins_arduino.h"
 
 
 void shiftReg_initPins(shiftReg_t* shiftReg) {

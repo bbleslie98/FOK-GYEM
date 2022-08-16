@@ -118,13 +118,13 @@ void driver_init() {
  */
 static void _driver_setRowControl(enum _DRV_ROW_CONTROL_MODE mode, uint8_t row, uint8_t panel) {
 	
-//Leading zeros
+//Leading zeros :: total panel - (panel + 1) times
 	for(uint8_t i = 0; i < CFG_PANEL_COUNT - 1 - panel; i++) {
 		shiftReg_sendData(&_rowCntrlReg, 0x00, 8);
 		shiftReg_sendData(&_rowCntrlReg, 0x00, 8);
 	}
 
-//Panel data
+//Panel data :: 1 time
 	if(mode == _DRV_ROW_CONTROL_MODE_SINK) {
 		shiftReg_sendData(&_rowCntrlReg, DRV_ROW_SHIFT_BASE << row, 8);
 		shiftReg_sendData(&_rowCntrlReg, 0x00, 8);				
@@ -133,7 +133,7 @@ static void _driver_setRowControl(enum _DRV_ROW_CONTROL_MODE mode, uint8_t row, 
 		shiftReg_sendData(&_rowCntrlReg, DRV_ROW_SHIFT_BASE << row, 8);
 	}
 
-//Trailing
+//Trailing :: panel times
 	for(uint8_t i = 0; i < panel; i++) {
 		shiftReg_sendData(&_rowCntrlReg, 0x00, 8);
 		shiftReg_sendData(&_rowCntrlReg, 0x00, 8);
