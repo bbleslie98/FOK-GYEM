@@ -15,10 +15,12 @@ void setup() {
     driver_forceWriteScreen();
 }
 
-
 void loop() {
     sCom_waitForData(buff, DRV_DATABUFF_SIZE);
     driver_setBuffer(buff, DRV_DATABUFF_SIZE);
     driver_writeScreen();
+    while(Serial.available()) { //Remove any remaining or corrupted serial data from the buffer
+        Serial.read();
+    }
     Serial.println("print_finished");    
 }
