@@ -9,4 +9,3 @@ extensions.json
 include/README
 lib/README
 test/README
-src/main.cpp
